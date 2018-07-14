@@ -236,7 +236,6 @@ def kill(name):
 
 
 def death(reason):
-    output = app.getLabel("output")
     char.dead = True
     app.disableEnter()
     app.setLabel("output", "You Died because of " + reason + "\nYour Funeral was attended by :\n" + char.mum + "\n" + char.dad)
