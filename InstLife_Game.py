@@ -51,6 +51,8 @@ class Character(object):
         self.canDrive = False
         self.canDrink = False
         self.canWork = False
+        self.hasJob
+        self.rankNum = 0
         self.job = "None"
         self.jobPay = 0
         self.rank = "None"
@@ -114,8 +116,6 @@ class Job(object):
         self.name = ""
         self.pay = 0
         self.ranks = []
-        self.canGetPromted = False
-
 
 # Variable Setup
 
@@ -137,6 +137,7 @@ def getJob(name):
         app.startSubWindow("jobSelect", title="Job Selection", modal=True)
         app.addLabel("jobSelect", "Please Select your Job")
         app.addButton("Buisness", setJob)
+        app.addButton("Film & TV", setJob)
         app.addButton("Cancel", closeWindow)
     except:
         pass
@@ -150,12 +151,20 @@ def setJob(name):
     if name == "Buisness":
         job.name = "Buisness"
         char.job = "Buisness"
+        job.pay = [12000, 24000, 36000, 40000, 60000]
         job.ranks = ["Intern", "Employee", "Manager", "Vice President", "CEO"]
-        char.rank = job.ranks[0]
-    print(name + " Job Selected")
-    print(char.job)
-    print(char.rank)
-    
+        char.rank = job.ranks[char.rankNum]
+        char.jobPay = job.pay[char.rankNum]
+    elif name == "Film & TV":
+        job.name = "Film & TV"
+        char.job = "Film & TV"
+        job.pay = [12000, 24000, 36000, 40000, 60000, 100000]
+        job.ranks = ["Fast Food Assistant", "Fast Food Chef", "Resturant Assistant", "Resturant Chef", "Gormet Assistant", "Gormet Chef"]
+        char.rank = job.ranks[char.rankNum]
+        char.jobPay = job.pay[char.rankNum]
+    char.hasJob = True
+    update()
+   
         
 def update():
     app.setLabel("occupation", "Occupation: " + char.job)
@@ -246,6 +255,8 @@ def age_up():
         elif world.war == False and random.randint(0, death_chance) < 5:
             death("natural causes !")
         
+
+
         #Adulthood Setting
         if char.age > 18:
             app.setLabel("CandH_output2", "You can House!!")
