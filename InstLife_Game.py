@@ -50,6 +50,7 @@ class Character(object):
         self.canHouse = False
         self.canDrive = False
         self.canDrink = False
+        self.canWork = False
         self.hasKids = False
         self.kids = []
         self.money = 0
@@ -136,7 +137,10 @@ def start():
 #   Job Tab
 
     app.startTab("Job")
-    app.addLabel("job", "This is the Job Tab!")
+    app.addLabel("job", "Jobs")
+    app.addLabel("occupation", "You cant work yet!")
+    app.addLabel("pay", "")
+    app.addLabel("rank", "")
     app.stopTab()
 
 #   Relationship Tab
@@ -189,11 +193,11 @@ def age_up():
         if world.war == True and char.country == world.warBetween[0] or char.country == world.warBetween[1] and random_number <100:
             death("the war in " + char.country)
         elif char.age > 80:
-            death_chance = 500
+            death_chance = random.randint(0,500)
             if death_chance > 50:
-                death("natural causes!")
+                death("natural causes(1)!")
         elif world.war == False and random.randint(0, death_chance) < 5:
-            death("natural causes (1)!")
+            death("natural causes !")
         
         #Adulthood Setting
         if char.age > 18:
@@ -260,6 +264,7 @@ app.enableEnter(begin)
 app.bindKey("<Escape>", kill)
 start()
 app.go()
+app.debug("Sucessfully Initialised")
 
 
 
