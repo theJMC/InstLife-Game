@@ -314,7 +314,7 @@ def age_up():
                 world.warBetween[1] = random.choice(country)
             output = app.getLabel("output")
             app.setLabel("output", "A War Has Broken Out Between " + world.warBetween[0] + " and " + world.warBetween[1] + "\n" + output )
-            
+    begin("")        
 
 # AGE TITLE STUFF
 
