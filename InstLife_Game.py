@@ -15,6 +15,7 @@ def randomnum():
 
 # Character Initialization!
 
+# Character Names
 fbnames = ["Donald", "James", "Max", "Steve", "Olly", "Jack", "Harry", "George", "Jacob", "Charlie", "Noah", "William", "Leo", "Alfie", "Henry", "Josh", "Freddie", "Archie", "Ethan", "Alex", "Joe", "Sam", "Max", "Logan", "Lucas", "Daniel", "Theo", "Arthur", "Adam", "Dylan", "Ruben", "Jake", "Luca", "Matthew", "Harvey", "Luke"]
 fgnames = ["Charlotte", "Lucy", "Fiona", "Ellie", "Olivia", "Amelia", "Emily", "Isla", "Isabella", "Isabel", "Lily", "Jessica", "Ella", "Mia", "Sophia", "Sophie", "Poppy", "Grace", "Evie", "Alice", "Freya", "Florence", "Daisy", "Chloe", "Phoebe", "Tilly", "Ruby", "Sienna", "Sofia", "Eva", "Elsie", "Willow", "Millie", "Esme", "Rosie"]
 lnames = ["Richardson", "Trump", "McCarthy", "Johnston", "Terry", "Smith", "Jones", "Williams", "Taylor", "Davies", "Brown", "Wilson", "Evans", "Thomas", "Johnson", "Roberts", "Walker", "Wright", "Robinson", "Thompson", "White", "Hughes", "Edwards", "Green", "Lewis", "Wood", "Harris", "Martin", "Jackson", "Clarke"]
@@ -23,9 +24,13 @@ fsex = ["Female", "Lesbian Female", "Transgender Girl", "Pansexual", "Bisexual"]
 country = ["United Kingdom", "United States of America", "Spain", "North Korea", "South Korea", "Japan", "Wales", "France", "Germany", "Canada", "Ireland", "Mexico", "Brazil", "China", "India", "Russia"]
 
 
+# Parents Setup
 mum = fgnames[random.randint(0, len(fgnames) - 1)] + " "
 dad = fbnames[random.randint(0, len(fbnames) - 1)] + " " 
 
+#Classes
+
+# Colour 
 class Color:
     PURPLE = '\033[95m'
     CYAN = '\033[96m'
@@ -38,7 +43,7 @@ class Color:
     UNDERLINE = '\033[4m'
     END = '\033[0m'
 
-
+# Character Boilerplate
 class Character(object):
     def __init__(self):
         self.dead = False
@@ -93,12 +98,13 @@ class Character(object):
         while self.dad == self.first + " " + self.last:
             self.dad = dad + self.last
 
+# World Boilerplate
 class World(object):
     def __init__(self):
         self.war = False
         self.warBetween = ["", ""]
 
-
+# Variable Setup
 
 d_attendance = ""
 welcome_message = "Hello and Welcome to InstLife:Python Edition!"
@@ -162,7 +168,7 @@ def start():
 
     app.stopTabbedFrame()
 
-
+# Start Up
 def begin(name):
     output = app.getLabel("output")
     if output == welcome_message:
@@ -174,9 +180,10 @@ def begin(name):
         age_up()
 
 
+# Situations
 def age_up():
     if char.dead is False:
-        # Age Events
+        # Death Algorithm
         random_number = random.randint(0, 2000)
         death_chance = 1000 - char.age
         if world.war == True and char.country == world.warBetween[0] or char.country == world.warBetween[1] and random_number <100:
@@ -188,6 +195,7 @@ def age_up():
         elif world.war == False and random.randint(0, death_chance) < 5:
             death("natural causes (1)!")
         
+        #Adulthood Setting
         if char.age > 18:
             app.setLabel("CandH_output2", "You can House!!")
             char.canHouse = True
@@ -206,6 +214,7 @@ def age_up():
                         output = app.getLabel("output")
                         app.setLabel("output", "You Failed your Driving Test\n" + output)
 
+        #Random Wars
         if random_number < 50 and world.war == True:
             world.war = False
             output = app.getLabel("output")
@@ -232,17 +241,19 @@ def age_up():
         app.setLabel("output", "\n" + str(char.age) + " Years Old" + "\n" + output)
         char.age = char.age + 1
 
-
+#Exits The GUI
 def kill(name):
     app.stop()
 
-
+#Kills The Character
 def death(reason):
     char.dead = True
     app.disableEnter()
     app.setLabel("output", "You Died because of " + reason + "\nYour Funeral was attended by :\n" + char.mum + "\n" + char.dad)
 
 
+
+#Setup
 app = appJar.gui("InstLife", "600x600")
 # app.showSplash("InstLife : Python Edition", fill='red', stripe='black',  fg='white', font=44)
 app.enableEnter(begin)
