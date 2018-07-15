@@ -178,31 +178,33 @@ def age_up():
     if char.dead is False:
         # Age Events
         random_number = random.randint(0, 2000)
-        death_chance = 500 - char.age
-        if world.war == False and random.randint(0, death_chance) < 5 :
-            death("natural causes!")
-        elif world.war == True and char.country == world.warBetween[0] or char.country == world.warBetween[1] and random_number <100:
+        death_chance = 1000 - char.age
+        if world.war == True and char.country == world.warBetween[0] or char.country == world.warBetween[1] and random_number <100:
             death("the war in " + char.country)
-        elif random.randint(0, death_chance) < 5:
-            death("natural causes!")
-        elif char.age > 150:
-            death("natural causes!")
+        elif char.age > 80:
+            death_chance = 500
+            if death_chance > 50:
+                death("natural causes!")
+        elif world.war == False and random.randint(0, death_chance) < 5:
+            death("natural causes (1)!")
         
         if char.age > 18:
             app.setLabel("CandH_output2", "You can House!!")
             char.canHouse = True
             char.canDrink = True
             if char.canDrive is False:
+                output = app.getLabel("output")
+                app.setLabel("output", "You attempted your Driving Test\n" + output)
                 drive_test = random.randint(0, 100)
                 if drive_test < 25:
                     if drive_test < 75:
                         output = app.getLabel("output")
-                        app.setLabel("output", "You attempted your Driving Test\nYou Passed your Driving Test!\n" + output)
+                        app.setLabel("output", "You Passed your Driving Test!\n" + output)
                         char.canDrive = True
                         app.setLabel("CandH_output1", "You can Car!")
                     else:
                         output = app.getLabel("output")
-                        app.setLabel("output", "You attempted your Driving Test\nYou Failed your Driving Test\n" + output)
+                        app.setLabel("output", "You Failed your Driving Test\n" + output)
 
         if random_number < 50 and world.war == True:
             world.war = False
