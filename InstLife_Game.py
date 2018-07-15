@@ -51,7 +51,7 @@ class Character(object):
         self.canDrive = False
         self.canDrink = False
         self.canWork = False
-        self.hasJob
+        self.hasJob = False
         self.rankNum = 0
         self.job = "None"
         self.jobPay = 0
@@ -137,7 +137,7 @@ def getJob(name):
         app.startSubWindow("jobSelect", title="Job Selection", modal=True)
         app.addLabel("jobSelect", "Please Select your Job")
         app.addButton("Buisness", setJob)
-        app.addButton("Film & TV", setJob)
+        app.addButton("Food", setJob)
         app.addButton("Cancel", closeWindow)
     except:
         pass
@@ -155,9 +155,9 @@ def setJob(name):
         job.ranks = ["Intern", "Employee", "Manager", "Vice President", "CEO"]
         char.rank = job.ranks[char.rankNum]
         char.jobPay = job.pay[char.rankNum]
-    elif name == "Film & TV":
-        job.name = "Film & TV"
-        char.job = "Film & TV"
+    elif name == "Food":
+        job.name = "Food"
+        char.job = "Food"
         job.pay = [12000, 24000, 36000, 40000, 60000, 100000]
         job.ranks = ["Fast Food Assistant", "Fast Food Chef", "Resturant Assistant", "Resturant Chef", "Gormet Assistant", "Gormet Chef"]
         char.rank = job.ranks[char.rankNum]
@@ -170,6 +170,7 @@ def update():
     app.setLabel("occupation", "Occupation: " + char.job)
     app.setLabel("pay", "Pay: " + str(char.jobPay))
     app.setLabel("rank", "Rank: " + char.rank)
+    app.setLabel("money", "You have: " + str(char.money))
 
 def start():
     app.startTabbedFrame("InstLife")
@@ -216,6 +217,7 @@ def start():
 
     app.startTab("Me")
     app.addLabel("Me", "Welcome to the Me Tab!")
+    app.addLabel("money", "You have: " + str(char.money))
     app.stopTab()
 
 #   Settings
@@ -255,7 +257,20 @@ def age_up():
         elif world.war == False and random.randint(0, death_chance) < 5:
             death("natural causes !")
         
-
+        # Job Events
+        if char.hasJob == True: 
+            char.money = char.money + char.jobPay
+            jobEvent = random.randint(0,1000)
+            if jobEvent > 950: 
+                output = app.getLabel("output")
+                app.setLabel("output", "You have done excellent work in " + char.job + " so you got a promotion!" + output)
+                char.rankNum = char.rankNum + 1
+                try:
+                    setJob(char.job)
+                except IndexError:
+                    output = app.getLabel("output")
+                    app.setLabel("output", "Haha! You are Already at the top of your work chain!")
+                update()
 
         #Adulthood Setting
         if char.age > 18:
@@ -282,6 +297,7 @@ def age_up():
             app.setLabel("rank", "Rank: " + char.rank)
             app.openTab("InstLife", "Job")
             app.addButton("Get A Job!", getJob)
+        update()
 
         #Random Wars
         if random_number < 50 and world.war == True:
