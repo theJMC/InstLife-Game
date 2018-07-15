@@ -192,9 +192,10 @@ def age_up():
         death_chance = 1000 - char.age
         if world.war == True and char.country == world.warBetween[0] or char.country == world.warBetween[1] and random_number <100:
             death("the war in " + char.country)
+        elif char.age > 111:
+            death("natural causes (2)!")      
         elif char.age > 80:
-            death_chance = random.randint(0,500)
-            if death_chance > 50:
+            if random.randint(0,1000) < 10:
                 death("natural causes(1)!")
         elif world.war == False and random.randint(0, death_chance) < 5:
             death("natural causes !")
@@ -204,6 +205,7 @@ def age_up():
             app.setLabel("CandH_output2", "You can House!!")
             char.canHouse = True
             char.canDrink = True
+            char.canWork = True
             if char.canDrive is False:
                 output = app.getLabel("output")
                 app.setLabel("output", "You attempted your Driving Test\n" + output)
