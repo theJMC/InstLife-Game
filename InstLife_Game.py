@@ -51,6 +51,9 @@ class Character(object):
         self.canDrive = False
         self.canDrink = False
         self.canWork = False
+        self.job = "None"
+        self.jobPay = 0
+        self.rank = "None"
         self.hasKids = False
         self.kids = []
         self.money = 0
@@ -105,6 +108,15 @@ class World(object):
         self.war = False
         self.warBetween = ["", ""]
 
+# Job Boilerplate
+class Job(object):
+    def __init__(self):
+        self.name = ""
+        self.pay = 0
+        self.ranks = []
+        self.canGetPromted = False
+
+
 # Variable Setup
 
 d_attendance = ""
@@ -116,6 +128,39 @@ world = World()
 
 # Main Code
 
+def closeWindow(name):
+    app.hideSubWindow("jobSelect")
+    update()
+
+def getJob(name): 
+    try:
+        app.startSubWindow("jobSelect", title="Job Selection", modal=True)
+        app.addLabel("jobSelect", "Please Select your Job")
+        app.addButton("Buisness", setJob)
+        app.addButton("Cancel", closeWindow)
+    except:
+        pass
+    app.showSubWindow("jobSelect")
+    
+    
+
+def setJob(name):
+    closeWindow("life")
+    job = Job()
+    if name == "Buisness":
+        job.name = "Buisness"
+        char.job = "Buisness"
+        job.ranks = ["Intern", "Employee", "Manager", "Vice President", "CEO"]
+        char.rank = job.ranks[0]
+    print(name + " Job Selected")
+    print(char.job)
+    print(char.rank)
+    
+        
+def update():
+    app.setLabel("occupation", "Occupation: " + char.job)
+    app.setLabel("pay", "Pay: " + str(char.jobPay))
+    app.setLabel("rank", "Rank: " + char.rank)
 
 def start():
     app.startTabbedFrame("InstLife")
@@ -127,6 +172,7 @@ def start():
     app.setSticky("ew")
     app.addButton("Age Up!", begin)
     app.stopTab()
+    
 
 #   Education Tab
 
@@ -138,7 +184,7 @@ def start():
 
     app.startTab("Job")
     app.addLabel("job", "Jobs")
-    app.addLabel("occupation", "You cant work yet!")
+    app.addLabel("occupation", "You Cant Work Yet!")
     app.addLabel("pay", "")
     app.addLabel("rank", "")
     app.stopTab()
@@ -219,6 +265,12 @@ def age_up():
                     else:
                         output = app.getLabel("output")
                         app.setLabel("output", "You Failed your Driving Test\n" + output)
+        if char.age == 18:
+            app.setLabel("occupation", "Occupation: " + char.job)
+            app.setLabel("pay", "Pay: " + str(char.jobPay))
+            app.setLabel("rank", "Rank: " + char.rank)
+            app.openTab("InstLife", "Job")
+            app.addButton("Get A Job!", getJob)
 
         #Random Wars
         if random_number < 50 and world.war == True:
@@ -266,6 +318,7 @@ app.enableEnter(begin)
 app.bindKey("<Escape>", kill)
 start()
 app.go()
+
 app.debug("Sucessfully Initialised")
 
 
