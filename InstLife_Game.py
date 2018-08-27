@@ -286,11 +286,13 @@ def age_up():
                     if drive_test < 75:
                         output = app.getLabel("output")
                         app.setLabel("output", "You Passed your Driving Test!\n" + output)
+                        app.info("Driving Attempt")
                         char.canDrive = True
                         app.setLabel("CandH_output1", "You can Car!")
                     else:
                         output = app.getLabel("output")
                         app.setLabel("output", "You Failed your Driving Test\n" + output)
+                        app.info("Driving Sucessfuil")
         if char.age == 18:
             app.setLabel("occupation", "Occupation: " + char.job)
             app.setLabel("pay", "Pay: " + str(char.jobPay))
@@ -304,6 +306,7 @@ def age_up():
             world.war = False
             output = app.getLabel("output")
             app.setLabel("output", "The War Between " + world.warBetween[0] + " and " + world.warBetween[1] + " has ended!" + "\n" + output) 
+            app.info("War Begins")
             world.warBetween[0] = ""
             world.warBetween[1] = ""
         elif random_number < 50 and world.war == False:
@@ -336,6 +339,7 @@ def death(reason):
     char.dead = True
     app.disableEnter()
     app.setLabel("output", "You Died because of " + reason + "\nYour Funeral was attended by :\n" + char.mum + "\n" + char.dad)
+    app.info("Character Killed")
 
 
 
@@ -344,10 +348,10 @@ app = appJar.gui("InstLife", "600x600")
 # app.showSplash("InstLife : Python Edition", fill='red', stripe='black',  fg='white', font=44)
 app.enableEnter(begin)
 app.bindKey("<Escape>", kill)
+app.info("Sucessfully Initialised")
 start()
 app.go()
 
-app.debug("Sucessfully Initialised")
 
 
 
