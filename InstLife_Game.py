@@ -286,13 +286,13 @@ def age_up():
                     if drive_test < 75:
                         output = app.getLabel("output")
                         app.setLabel("output", "You Passed your Driving Test!\n" + output)
-                        app.info("Driving Attempt")
+                        print("Driving Attempt")
                         char.canDrive = True
                         app.setLabel("CandH_output1", "You can Car!")
                     else:
                         output = app.getLabel("output")
                         app.setLabel("output", "You Failed your Driving Test\n" + output)
-                        app.info("Driving Sucessfuil")
+                        print("Driving Sucessfuil")
         if char.age == 18:
             app.setLabel("occupation", "Occupation: " + char.job)
             app.setLabel("pay", "Pay: " + str(char.jobPay))
@@ -306,7 +306,6 @@ def age_up():
             world.war = False
             output = app.getLabel("output")
             app.setLabel("output", "The War Between " + world.warBetween[0] + " and " + world.warBetween[1] + " has ended!" + "\n" + output) 
-            app.info("War Begins")
             world.warBetween[0] = ""
             world.warBetween[1] = ""
         elif random_number < 50 and world.war == False:
@@ -316,7 +315,8 @@ def age_up():
             while world.warBetween[0] == world.warBetween[1]:
                 world.warBetween[1] = random.choice(country)
             output = app.getLabel("output")
-            app.setLabel("output", "A War Has Broken Out Between " + world.warBetween[0] + " and " + world.warBetween[1] + "\n" + output )    
+            app.setLabel("output", "A War Has Broken Out Between " + world.warBetween[0] + " and " + world.warBetween[1] + "\n" + output )  
+            print("War Begins")
     else:
         begin("")  
 
@@ -339,7 +339,7 @@ def death(reason):
     char.dead = True
     app.disableEnter()
     app.setLabel("output", "You Died because of " + reason + "\nYour Funeral was attended by :\n" + char.mum + "\n" + char.dad)
-    app.info("Character Killed")
+    print("Character Killed")
 
 
 
@@ -348,7 +348,7 @@ app = appJar.gui("InstLife", "600x600")
 # app.showSplash("InstLife : Python Edition", fill='red', stripe='black',  fg='white', font=44)
 app.enableEnter(begin)
 app.bindKey("<Escape>", kill)
-app.info("Sucessfully Initialised")
+print("Sucessfully Initialised")
 start()
 app.go()
 
