@@ -1,3 +1,19 @@
+"""
+Title: InstLife - Python Edition
+
+Date: 07/10/2018
+
+Author: James McCarthy
+
+Notes:
+
+Todo:
+
+"""
+#import random
+#import getpass
+#import appJar
+
 import appJar
 import random
 
