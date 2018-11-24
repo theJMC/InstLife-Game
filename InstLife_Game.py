@@ -44,6 +44,17 @@ country = ["United Kingdom", "United States of America", "Spain", "North Korea",
 mum = fgnames[random.randint(0, len(fgnames) - 1)] + " "
 dad = fbnames[random.randint(0, len(fbnames) - 1)] + " " 
 
+# Environment Variables
+
+# Out of 100 
+death_by_driving = 9
+
+# Out of 100 - Must be bigger than death_by_driving
+driving_success = 75
+
+# Out of 1000
+death_chance = 20 
+
 #Classes
 
 # Colour 
@@ -262,15 +273,14 @@ def age_up():
     if char.dead is False:
         # Death Algorithm
         random_number = random.randint(0, 2000)
-        death_chance = 1000 - char.age
         if world.war == True and char.country == world.warBetween[0] or char.country == world.warBetween[1] and random_number <100:
             death("the war in " + char.country)
         elif char.age > 111:
             death("natural causes (2)!")      
         elif char.age > 80:
-            if random.randint(0,1000) < 10:
+            if random.randint(0,1000) < death_chance:
                 death("natural causes(1)!")
-        elif world.war == False and random.randint(0, death_chance) < 5:
+        elif world.war == False and random.randint(0, 2000) < death_chance:
             death("natural causes !")
         
         # Job Events
@@ -298,8 +308,8 @@ def age_up():
                 output = app.getLabel("output")
                 app.setLabel("output", "You attempted your Driving Test\n" + output)
                 drive_test = random.randint(0, 100)
-                if drive_test < 25:
-                    if drive_test < 75:
+                if drive_test > death_by_driving:
+                    if drive_test < driving_success:
                         output = app.getLabel("output")
                         app.setLabel("output", "You Passed your Driving Test!\n" + output)
                         print("Driving Attempt")
@@ -309,6 +319,8 @@ def age_up():
                         output = app.getLabel("output")
                         app.setLabel("output", "You Failed your Driving Test\n" + output)
                         print("Driving Sucessfuil")
+                else:
+                    death("A Car Crash in your diving test")
         if char.age == 18:
             app.setLabel("occupation", "Occupation: " + char.job)
             app.setLabel("pay", "Pay: " + str(char.jobPay))
@@ -355,7 +367,7 @@ def death(reason):
     char.dead = True
     app.disableEnter()
     app.setLabel("output", "You Died because of " + reason + "\nYour Funeral was attended by :\n" + char.mum + "\n" + char.dad)
-    print("Character Killed")
+    print("Character Killed" + reason)
 
 
 
