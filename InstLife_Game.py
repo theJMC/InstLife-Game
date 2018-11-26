@@ -312,13 +312,13 @@ def age_up():
                     if drive_test < driving_success:
                         output = app.getLabel("output")
                         app.setLabel("output", "You Passed your Driving Test!\n" + output)
-                        print("Driving Attempt")
+                        print("Driving Sucessfuil")
                         char.canDrive = True
                         app.setLabel("CandH_output1", "You can Car!")
                     else:
                         output = app.getLabel("output")
                         app.setLabel("output", "You Failed your Driving Test\n" + output)
-                        print("Driving Sucessfuil")
+                        print("Driving Attempt")
                 else:
                     death("A Car Crash in your diving test")
         if char.age == 18:
