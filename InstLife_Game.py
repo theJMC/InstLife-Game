@@ -10,7 +10,6 @@ Notes:
 Todo:
 
 """
-#import random
 #import getpass
 #import appJar
 
@@ -191,8 +190,7 @@ def setJob(name):
         char.jobPay = job.pay[char.rankNum]
     char.hasJob = True
     update()
-   
-        
+
 def update():
     app.setLabel("occupation", "Occupation: " + char.job)
     app.setLabel("pay", "Pay: " + str(char.jobPay))
