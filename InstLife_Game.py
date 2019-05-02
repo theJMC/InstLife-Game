@@ -293,7 +293,7 @@ def age_up():
                     setJob(char.job)
                 except IndexError:
                     output = app.getLabel("output")
-                    app.setLabel("output", "Haha! You are Already at the top of your work chain!")
+                    app.setLabel("output", "Haha! You are Already at the top of your work chain!" + output)
                 update()
 
         #Adulthood Setting
